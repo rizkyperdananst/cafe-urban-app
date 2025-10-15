@@ -2,6 +2,12 @@
 @section('title', 'Dashboard Pelanggan')
 
 @section('content')
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
     <div class="d-flex">
         {{-- Sidebar --}}
         {{-- <aside class="bg-light border-end" style="width: 220px; min-height: 100vh;">
@@ -41,6 +47,7 @@
             </div>
         </aside> --}}
 
+
         {{-- Main Content --}}
         <main class="flex-grow-1 p-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -48,7 +55,7 @@
                 <div>
                     <span class="me-3 text-muted">Hai, {{ Auth::user()->name ?? 'Pelanggan' }}</span>
                     {{-- <a href="{{ route('cart.index') }}" class="btn btn-light position-relative"> --}}
-                    <a href="#" class="btn btn-light position-relative">
+                    <a href="{{ route('customer.cart.index') }}" class="btn btn-light position-relative">
                         <i class="bi bi-cart-fill fs-5"></i>
                         @if (session('cart') && count(session('cart')) > 0)
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -71,8 +78,7 @@
 
             {{-- Filter Kategori --}}
             <div class="d-flex flex-wrap gap-2 mb-4">
-                <a href="#"
-                    class="btn btn-sm {{ request('category') ? 'btn-outline-secondary' : 'btn-secondary' }}">
+                <a href="#" class="btn btn-sm {{ request('category') ? 'btn-outline-secondary' : 'btn-secondary' }}">
                     Semua
                 </a>
                 @foreach ($categories as $cat)
@@ -104,11 +110,11 @@
 
                             <div class="card-body text-center">
                                 <h6 class="card-title fw-bold">{{ $menu->name }}</h6>
-                                <p class="mb-2 text-muted">Rp {{ number_format($menu->price, 0, ',', '.') }}</p>
-                                {{-- <form action="{{ route('cart.add', $menu->id) }}" method="POST"> --}}
-                                <form action="#" method="POST">
+                                <p class="mb-2 text-muted small">{{ $menu->category->name ?? '' }}</p>
+                                <p class="mb-3 fw-bold text-dark">Rp {{ number_format($menu->price, 0, ',', '.') }}</p>
+                                <form action="{{ route('customer.cart.add', $menu->id) }}" method="POST">
                                     @csrf
-                                    <button class="btn btn-sm text-white" style="background-color: #6f42c1;">
+                                    <button class="btn btn-sm text-white w-100" style="background-color: #6f42c1;">
                                         <i class="bi bi-cart-plus me-1"></i> Masukkan Keranjang
                                     </button>
                                 </form>

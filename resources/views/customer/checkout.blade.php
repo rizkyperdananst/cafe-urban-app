@@ -21,7 +21,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Nama Lengkap</label>
                                 <input type="text" name="name" class="form-control"
-                                    value="{{ old('name', auth()->user()->name) }}" required>
+                                    value="{{ old('name', auth()->user()->first_name) }} {{ old('name', auth()->user()->last_name) }}" required readonly>
                             </div>
 
                             <div class="mb-3">

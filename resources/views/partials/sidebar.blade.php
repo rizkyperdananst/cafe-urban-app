@@ -3,37 +3,37 @@
          <h5 class="text-center mb-4">Menu Admin</h5>
          <ul class="nav flex-column gap-1">
              <li>
-                 <a href="#" class="nav-link active">
+                 <a href="{{ route('admin.dashboard') }}" class="nav-link {{ Request::is('admin/dashboard*') ? 'active' : '' }}">
                      <i class="bi bi-speedometer2 me-2"></i> Dashboard
                  </a>
              </li>
              <li>
-                 <a href="{{ route('admin.categories.index') }}" class="nav-link">
+                 <a href="{{ route('admin.categories.index') }}" class="nav-link {{ Request::is('admin/categories*') ? 'active' : '' }}">
                      <i class="bi bi-tags me-2"></i> Kategori Menu
                  </a>
              </li>
              <li>
-                 <a href="{{ route('admin.menus.index') }}" class="nav-link">
+                 <a href="{{ route('admin.menus.index') }}" class="nav-link {{ Request::is('admin/menus*') ? 'active' : '' }}">
                      <i class="bi bi-list-ul me-2"></i> Data Menu
                  </a>
              </li>
              <li>
-                 <a href="{{ route('admin.customers.index') }}" class="nav-link">
+                 <a href="{{ route('admin.customers.index') }}" class="nav-link {{ Request::is('admin/customers*') ? 'active' : '' }}">
                      <i class="bi bi-person-lines-fill me-2"></i> Data Pelanggan
                  </a>
              </li>
              <li>
-                 <a href="{{ route('admin.users.index') }}" class="nav-link">
+                 <a href="{{ route('admin.users.index') }}" class="nav-link {{ Request::is('admin/users*') ? 'active' : '' }}">
                      <i class="bi bi-person-gear me-2"></i> Data Admin
                  </a>
              </li>
              <li>
-                 <a href="{{ route('admin.orders.index') }}" class="nav-link">
+                 <a href="{{ route('admin.orders.index') }}" class="nav-link {{ Request::is('admin/orders*') ? 'active' : '' }}">
                      <i class="bi bi-truck me-2"></i> Status Pesanan
                  </a>
              </li>
              <li>
-                 <a href="{{ route('admin.reports.index') }}" class="nav-link">
+                 <a href="{{ route('admin.reports.index') }}" class="nav-link {{ Request::is('admin/reports*') ? 'active' : '' }}">
                      <i class="bi bi-graph-up-arrow me-2"></i> Laporan Penjualan
                  </a>
              </li>

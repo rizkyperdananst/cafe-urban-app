@@ -21,11 +21,11 @@ use App\Http\Controllers\Admin\OrderManagementController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
@@ -56,7 +56,7 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:Super Admin,Adm
 Route::name('customer.')->prefix('customer')->middleware('auth', 'role:Customer')->group(function () {
     Route::get('/dashboard', function () {
         $categories = \App\Models\Category::all();
-        $menus = \App\Models\Menu::paginate(6);
+        $menus = \App\Models\Menu::orderBy('created_at', 'desc')->paginate(6);
 
         return view('customer.dashboard', compact('categories', 'menus'));
     })->name('dashboard');
