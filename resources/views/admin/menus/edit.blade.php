@@ -43,12 +43,19 @@
 
             <div class="mb-3">
                 <label for="price" class="form-label">Harga</label>
-                <input type="number" id="price" name="price" step="0.01" value="{{ old('price', $menu->price) }}"
-                    class="form-control @error('price') is-invalid @enderror" required>
+
+                {{-- input yg ditampilkan ke user --}}
+                <input type="text" id="price_display" class="form-control @error('price') is-invalid @enderror"
+                    value="Rp {{ number_format(old('price', $menu->price), 0, ',', '.') }}" autocomplete="off">
+
+                {{-- nilai asli yang dikirim ke server --}}
+                <input type="hidden" id="price" name="price" value="{{ old('price', $menu->price) }}">
+
                 @error('price')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
 
             <div class="mb-3">
                 <label for="stock" class="form-label">Stok</label>
@@ -95,4 +102,22 @@
             <a href="{{ route('admin.menus.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
+
+    @push('scripts')
+        <script>
+            const display = document.getElementById('price_display');
+            const original = document.getElementById('price');
+
+            function formatRupiah(angka) {
+                return angka.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
+
+            display.addEventListener('input', function() {
+                let value = this.value.replace(/[^0-9]/g, '');
+                this.value = value ? 'Rp ' + formatRupiah(value) : '';
+                original.value = value;
+            });
+        </script>
+    @endpush
+
 @endsection

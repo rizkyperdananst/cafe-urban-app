@@ -45,11 +45,9 @@
 
             <div class="mb-3">
                 <label for="price" class="form-label">Harga</label>
-                <input type="number" id="price" name="price" step="0.01" value="{{ old('price') }}"
-                    class="form-control @error('price') is-invalid @enderror" placeholder="Contoh: 25000" required>
-                @error('price')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <input type="text" id="price_display" class="form-control" placeholder="Contoh: 25.000"
+                    autocomplete="off">
+                <input type="hidden" id="price" name="price" value="{{ old('price') }}">
             </div>
 
             <div class="mb-3">
@@ -91,4 +89,28 @@
             <a href="{{ route('admin.menus.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
+
+    @push('scripts')
+        <script>
+            const display = document.getElementById('price_display');
+            const original = document.getElementById('price');
+
+            // Format angka ke format Rupiah
+            function formatRupiah(angka) {
+                return angka.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
+
+            display.addEventListener('input', function(e) {
+                // buang semua selain angka
+                let value = this.value.replace(/[^0-9]/g, '');
+
+                // tampilkan dengan format ribuan
+                this.value = value ? 'Rp ' + formatRupiah(value) : '';
+
+                // simpan angka original ke hidden input
+                original.value = value;
+            });
+        </script>
+    @endpush
+
 @endsection

@@ -51,6 +51,7 @@ Route::name('admin.')->prefix('admin')->middleware('auth', 'role:Super Admin,Adm
     Route::delete('/orders/{order}', [OrderManagementController::class, 'destroy'])->name('orders.destroy');
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/pdf', [ReportController::class, 'exportPdf'])->name('reports.pdf');
 });
 
 Route::name('customer.')->prefix('customer')->middleware('auth', 'role:Customer')->group(function () {
